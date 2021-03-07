@@ -9,6 +9,9 @@ public class Main {
 
     static Board iniBoard;// initial board
     static Board goalBoard; // Goal board
+    static State startingState;
+    static State goalState; 
+    static boolean debug = false;
     
     public static void main(String[] args) {
         // TODO code application logic here
@@ -25,8 +28,10 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         ///////////////////  getting initial board
         System.out.print("Provide initial Board=>");
-//        String initialBoard = sc.next().trim();
-        String initialBoard = "7,2,4,5,0,6,8,3,1";
+        String initialBoard = sc.next().trim();
+//        String initialBoard = "7,2,4,5,0,6,8,3,1";
+//        String initialBoard = "0,1,3,4,2,5,7,8,6"; // given on project description page
+//        String initialBoard = "1,2,3,4,8,0,7,6,5";
         String[] board = initialBoard.split(",");
         System.out.println("board.length=>"+board.length);
         if(board.length!=9){
@@ -54,8 +59,8 @@ public class Main {
         
         //////////////////////  getting goal board
         System.out.print("\nProvide Goal Board=>");
-//        String goal_Board = sc.next().trim();
-        String goal_Board = "1,2,3,4,5,6,7,8,0";
+        String goal_Board = sc.next().trim();
+//        String goal_Board = "1,2,3,4,5,6,7,8,0";
         //1,2,3,4,5,6,7,8,0,9
         board = goal_Board.split(",");
         System.out.println("goal board.length=>"+board.length);
@@ -80,7 +85,12 @@ public class Main {
         goalBoard =  new Board(b);
         System.out.println("new board\n"+goalBoard);
         System.out.println("zero location=>"+Arrays.toString(goalBoard.getZeroPosition()));
-        
+        ///////////////////////////// initializing both the states
+        startingState = new State(iniBoard,0,null);
+        System.out.println("Starting State=>"+startingState);
+        goalState =  new State(goalBoard,0,null);
+        System.out.println("Goal State"+goalState);
+                
         //////////// inputs
         // inital board =>7,2,4,5,0,6,8,3,1
         // goal board =>1,2,3,4,5,6,7,8,0
@@ -109,25 +119,88 @@ public class Main {
             }
         };
         
-        PriorityQueue<State> Q =  new PriorityQueue<>(c1);
-        State firstState = new State(iniBoard,0,null);
-        System.out.println("-------------------------------\nfirstState=>"+firstState);
+        // ------------------------ testing start
+//        PriorityQueue<State> Q =  new PriorityQueue<>(c1);
+//        State firstState = new State(iniBoard,0,null);
+//        System.out.println("-------------------------------\nfirstState=>"+firstState);
+//        
+//        for(State st : firstState.Expand()){
+//            System.out.println("Node at level 1");
+//            System.out.println(st);
+//            Q.add(st);
+//        }
+//        
+//        State first_pop = Q.poll();
+//        System.out.println("first_pop=>"+first_pop);
+//        
+//        System.out.println("trying second level------------------");
+//        for(State st : first_pop.Expand()){
+//            System.out.println("Node at level 2");
+//            System.out.println(st);
+//            Q.add(st);
+//        }
+        // ------------------------ testing end
         
-        for(State st : firstState.Expand()){
-            System.out.println("Node at level 1");
-            System.out.println(st);
-            Q.add(st);
-        }
+        System.out.println("\n####### Note"
+                + "\n=> Intital state is not included in generated node count."
+                + "\n=> As there is no parent node for initial State, program will generate all possible nodes."
+                + "\n   You should not compare it with ppt example, where preofessor has assumed a parent state and"
+                + "\n   have not considered it for generation. in other words do not compare output of program with ppt"
+                + "\n=> Program will not show final state as it is same as given goal state.\n\n");
+        //------------------------- implementing A* with Heristic 1  start
+        System.out.println("Output of A* with Heuristic 1 (misplaced tiles hueristic)");
+        PriorityQueue<State> fringe1 =  new PriorityQueue<>(c1);
+        boolean result = AStar(startingState,goalState,fringe1);
+        if(result) 
+            System.out.println("result pass"); 
+        else 
+            System.out.println("result failure");
+        //------------------------- implementing A* with Heristic 1  end
         
-        State first_pop = Q.poll();
-        System.out.println("first_pop=>"+first_pop);
+        //------------------------- implementing A* with Heristic 2  start
+        System.out.println("\n\nOutput of A* with Heuristic 2 (Manhattan Distance)");
+        PriorityQueue<State> fringe2 =  new PriorityQueue<>(c2);
+        startingState = new State(iniBoard,0,null);
+        goalState =  new State(goalBoard,0,null);
+        result = AStar(startingState,goalState,fringe2);
+        if(result) 
+            System.out.println("result pass"); 
+        else 
+            System.out.println("result failure");
+        //------------------------- implementing A* with Heristic 2  end
         
-        System.out.println("trying second level------------------");
-        for(State st : first_pop.Expand()){
-            System.out.println("Node at level 2");
-            System.out.println(st);
-            Q.add(st);
-        }
+        
+        
     }
+    
+    public static boolean AStar(State startingSate,State goalSate,PriorityQueue<State> fringe){
+        // its a tree search algorithm
+        int nodeGenerated = 0;
+        int nodeExpanded = 0;
+        int level = 1; // depth in tree
+        fringe.add(startingSate);
+        while(!fringe.isEmpty()){
+            // remove front
+            nodeExpanded++;
+            State s = fringe.poll();
+            if(s.equals(goalSate)){
+                System.out.println("nodes Generated=>"+nodeGenerated);
+                System.out.println("nodes Expanded=>"+nodeExpanded);
+                System.out.println("Path cost =>"+s.gn);
+                return true;
+            }
+            // expand node and store newly generated node in fringe.
+            for(State st : s.Expand()){
+                if(debug) System.out.println("Node at level "+level);
+                if(debug) System.out.println(st);
+                fringe.add(st);
+                nodeGenerated++;
+            }
+            level++;
+        }
+        return false;
+    }
+    
+    
     
 }
