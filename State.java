@@ -1,6 +1,3 @@
-
-package ISProject1;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Objects;
@@ -14,12 +11,10 @@ public class State{
     Board board;
     // Gn => path to this state
     int gn;
-    // heuristic1
+    // value of heuristic1
     int h1;
-    // heuristic2
+    // value of heuristic2
     int h2;
-    // isHeuristic1IsSelected
-//    boolean isHeuristic1IsSelected;
 
     public State(Board board, int gn,State parent) {
         this.board = board;
@@ -31,52 +26,62 @@ public class State{
     
     
     // methods
-    // Expand
+    // Expand: Generate new states(node) with possible actions
     ArrayList<State> Expand(){
         ArrayList<State> states =  new ArrayList<>();
         int[][] b;
         State t_board;
-        // if action moveUp is possible add
+        // if action moveUp is possible
         b = this.board.moveUp();
         if(b!=null){
             t_board = new State(new Board(b),this.gn+1,this);
+            // check if newly generated state is same as parent state(node)
             if(!t_board.equals(this.parent)){
+                // if not then add to possible next states
                 states.add(t_board);
             }
         }
-        // if action moveLeft is possible add
-        b = this.board.moveLeft();
-        if(b!=null){
-            t_board = new State(new Board(b),this.gn+1,this);
-            if(!t_board.equals(this.parent)){
-                states.add(t_board);
-            }
-        }
-        // if action moveRight is possible add
+        // if action moveRight is possible 
         b = this.board.moveRight();
         if(b!=null){
             t_board = new State(new Board(b),this.gn+1,this);
+            // check if newly generated state is same as parent state(node)
             if(!t_board.equals(this.parent)){
+                // if not then add to possible next states
                 states.add(t_board);
             }
         }
-        // if action moveDown is possible add
+        // if action moveDown is possible 
         b = this.board.moveDown();
         if(b!=null){
             t_board = new State(new Board(b),this.gn+1,this);
+            // check if newly generated state is same as parent state(node)
             if(!t_board.equals(this.parent)){
+                // if not then add to possible next states
+                states.add(t_board);
+            }
+        }
+        // if action moveLeft is possible 
+        b = this.board.moveLeft();
+        if(b!=null){
+            t_board = new State(new Board(b),this.gn+1,this);
+            // check if newly generated state is same as parent state(node)
+            if(!t_board.equals(this.parent)){
+                // if not then add to possible next states
                 states.add(t_board);
             }
         }
         return states;
     }
-    // calculate h1
+    
+    // calculate h1: Calculate value using Heuristic 1 (misplaced tiles hueristic) algorithm
     private int CalculateH1(){
-        // number of missplaced tiles
         int misplaced = 0;
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
                 if(this.board.board[i][j]!=Main.goalBoard.board[i][j]){
+                    // if current board value and goal board value does not match 
+                    // count it as misplaced tile
                     misplaced++;
                 }
             }
@@ -84,7 +89,7 @@ public class State{
         return misplaced;
     }
     
-    // calculate h2
+    // calculate h2: Calculate value using Heuristic 2 (Manhattan Distance) alorithm
     private int CalculateH2(){
         // Manhattan Distance: 
         // The distance between two points measured along axes at right angles.
@@ -92,26 +97,22 @@ public class State{
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
                 if(this.board.board[i][j]!=Main.goalBoard.board[i][j]){
-                    int[] arg2 = Main.goalBoard.locateNumber(this.board.board[i][j]);
-                   distance = CalculateDistance(new int[]{i,j},arg2);
+                   // if current board value and goal board value does not match
+                   int[] arg2 = Main.goalBoard.locateNumber(this.board.board[i][j]);
+                   // calculate the steps required for to bring it to the right place 
+                   distance += CalculateDistance(new int[]{i,j},arg2);
                 }
             }
         }
         return distance;
     }
-    // helper for CalculateH2
+    // helper for Calculateing H2
     private int CalculateDistance(int[] a,int[] b){
         // a is location of number in current state
         // b is location of number in goal state
         return Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1]);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.board);
-        return hash;
-    }
 
     @Override
     public boolean equals(Object obj) {

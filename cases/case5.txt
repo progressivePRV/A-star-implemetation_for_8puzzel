@@ -1,0 +1,293 @@
+program will take initaial board in a single line.
+Every cell element should be provided comma sepearted.
+Make sure you don't have extra space in between.
+for example
+input=>1,2,3,4,5,6,7,8,0
+Generated Board=>
+1 2 3
+4 5 6
+7 8 0
+
+Note: 0 is considered as empty place in the puzzle
+Please Provide the initial Board=>0,1,2,3,4,5,6,7,8
+new board
+0 1 2
+3 4 5
+6 7 8
+
+location of zero (empty place in the puzzle)=>[0, 0]
+
+Please Provide the Goal Board=>1,2,3,4,5,6,7,8,0
+new board
+1 2 3
+4 5 6
+7 8 0
+
+location of zero (empty place in the puzzle)=>[2, 2]
+Starting State=>State{board=
+0 1 2
+3 4 5
+6 7 8
+, gn=0, h1=9, h2=16}
+
+Goal StateState{board=
+1 2 3
+4 5 6
+7 8 0
+, gn=0, h1=0, h2=0}
+
+checking if it is solvable.....
+inversions found=>0
+solvable
+Please select the Heuristic function
+1) Heuristic 1 (misplaced tiles hueristic)
+2) Heuristic 2 (Manhattan Distance) [default]
+=>1
+Selected=> Heuristic 1 (misplaced tiles hueristic)
+
+
+Output of A* with Heuristic 1 (misplaced tiles hueristic)
+nodes Generated=>12588
+nodes Expanded=>8022
+Path cost =>22
+0 1 2
+3 4 5
+6 7 8
+
+3 1 2
+0 4 5
+6 7 8
+
+3 1 2
+4 0 5
+6 7 8
+
+3 1 2
+4 5 0
+6 7 8
+
+3 1 0
+4 5 2
+6 7 8
+
+3 0 1
+4 5 2
+6 7 8
+
+0 3 1
+4 5 2
+6 7 8
+
+4 3 1
+0 5 2
+6 7 8
+
+4 3 1
+6 5 2
+0 7 8
+
+4 3 1
+6 5 2
+7 0 8
+
+4 3 1
+6 0 2
+7 5 8
+
+4 0 1
+6 3 2
+7 5 8
+
+4 1 0
+6 3 2
+7 5 8
+
+4 1 2
+6 3 0
+7 5 8
+
+4 1 2
+6 0 3
+7 5 8
+
+4 1 2
+0 6 3
+7 5 8
+
+0 1 2
+4 6 3
+7 5 8
+
+1 0 2
+4 6 3
+7 5 8
+
+1 2 0
+4 6 3
+7 5 8
+
+1 2 3
+4 6 0
+7 5 8
+
+1 2 3
+4 0 6
+7 5 8
+
+1 2 3
+4 5 6
+7 0 8
+
+1 2 3
+4 5 6
+7 8 0
+
+result pass
+
+----------------------------------------------separator for 2 heuristics-------------------------------------
+
+program will take initaial board in a single line.
+Every cell element should be provided comma sepearted.
+Make sure you don't have extra space in between.
+for example
+input=>1,2,3,4,5,6,7,8,0
+Generated Board=>
+1 2 3
+4 5 6
+7 8 0
+
+Note: 0 is considered as empty place in the puzzle
+Please Provide the initial Board=>0,1,2,3,4,5,6,7,8
+new board
+0 1 2
+3 4 5
+6 7 8
+
+location of zero (empty place in the puzzle)=>[0, 0]
+
+Please Provide the Goal Board=>1,2,3,4,5,6,7,8,0
+new board
+1 2 3
+4 5 6
+7 8 0
+
+location of zero (empty place in the puzzle)=>[2, 2]
+Starting State=>State{board=
+0 1 2
+3 4 5
+6 7 8
+, gn=0, h1=9, h2=16}
+
+Goal StateState{board=
+1 2 3
+4 5 6
+7 8 0
+, gn=0, h1=0, h2=0}
+
+checking if it is solvable.....
+inversions found=>0
+solvable
+Please select the Heuristic function
+1) Heuristic 1 (misplaced tiles hueristic)
+2) Heuristic 2 (Manhattan Distance) [default]
+=>2
+Selected=> Heuristic 2 (Manhattan Distance) [default]
+
+
+Output of A* with Heuristic 2 (Manhattan Distance)
+nodes Generated=>2243
+nodes Expanded=>1376
+Path cost =>22
+0 1 2
+3 4 5
+6 7 8
+
+1 0 2
+3 4 5
+6 7 8
+
+1 4 2
+3 0 5
+6 7 8
+
+1 4 2
+0 3 5
+6 7 8
+
+1 4 2
+6 3 5
+0 7 8
+
+1 4 2
+6 3 5
+7 0 8
+
+1 4 2
+6 3 5
+7 8 0
+
+1 4 2
+6 3 0
+7 8 5
+
+1 4 2
+6 0 3
+7 8 5
+
+1 4 2
+0 6 3
+7 8 5
+
+1 4 2
+7 6 3
+0 8 5
+
+1 4 2
+7 6 3
+8 0 5
+
+1 4 2
+7 0 3
+8 6 5
+
+1 0 2
+7 4 3
+8 6 5
+
+1 2 0
+7 4 3
+8 6 5
+
+1 2 3
+7 4 0
+8 6 5
+
+1 2 3
+7 4 5
+8 6 0
+
+1 2 3
+7 4 5
+8 0 6
+
+1 2 3
+7 4 5
+0 8 6
+
+1 2 3
+0 4 5
+7 8 6
+
+1 2 3
+4 0 5
+7 8 6
+
+1 2 3
+4 5 0
+7 8 6
+
+1 2 3
+4 5 6
+7 8 0
+
+result pass

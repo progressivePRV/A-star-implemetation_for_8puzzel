@@ -1,0 +1,42 @@
+program will take initaial board in a single line.
+Every cell element should be provided comma sepearted.
+Make sure you don't have extra space in between.
+for example
+input=>1,2,3,4,5,6,7,8,0
+Generated Board=>
+1 2 3
+4 5 6
+7 8 0
+
+Note: 0 is considered as empty place in the puzzle
+Please Provide the initial Board=>1,2,3,7,4,5,6,8,0
+new board
+1 2 3
+7 4 5
+6 8 0
+
+location of zero (empty place in the puzzle)=>[2, 2]
+
+Please Provide the Goal Board=>1,2,3,4,5,6,7,8,0
+new board
+1 2 3
+4 5 6
+7 8 0
+
+location of zero (empty place in the puzzle)=>[2, 2]
+Starting State=>State{board=
+1 2 3
+7 4 5
+6 8 0
+, gn=0, h1=4, h2=6}
+
+Goal StateState{board=
+1 2 3
+4 5 6
+7 8 0
+, gn=0, h1=0, h2=0}
+
+checking if it is solvable.....
+inversions found=>3
+NO solution found [not solvable]
+ refer 'https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/' for further information

@@ -1,6 +1,4 @@
-
-package ISProject1;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -24,7 +22,7 @@ public class Board implements Comparator{
     int[][] getBoard(){
         return this.board;
     }
-    // locate number
+    // locate number: locate the given number on the board.
     int[] locateNumber(int x){
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
@@ -37,7 +35,7 @@ public class Board implements Comparator{
         return null;
     }
     
-    // locate zero
+    // locate zero: locate the zero (empty place) on the board.
     private int[] locateZero(){
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
@@ -49,7 +47,7 @@ public class Board implements Comparator{
         // highly unlikly
         return null;
     }
-    // move up
+    // move up: if possible move zero up 
     int[][] moveUp(){
         int row = this.zeroPosition[0];
         int col = this.zeroPosition[1];
@@ -61,7 +59,7 @@ public class Board implements Comparator{
         newBoard[row][col] = t;
         return newBoard;
     }
-    // move down
+    // move down: if possible move zero down
     int[][] moveDown(){
         int row = this.zeroPosition[0];
         int col = this.zeroPosition[1];
@@ -73,7 +71,7 @@ public class Board implements Comparator{
         newBoard[row][col] = t;
         return newBoard;
     }
-    // move left
+    // move left: if possible move zero left
     int[][] moveLeft(){
         int row = this.zeroPosition[0];
         int col = this.zeroPosition[1];
@@ -85,7 +83,7 @@ public class Board implements Comparator{
         newBoard[row][col] = t;
         return newBoard;
     }
-    // move right
+    // move right: if possible move zero right
     int[][] moveRight(){
         int row = this.zeroPosition[0];
         int col = this.zeroPosition[1];
@@ -162,5 +160,13 @@ public class Board implements Comparator{
         return t;
     }
     
-    
+    ArrayList<Integer> toArrayList(){
+        ArrayList<Integer> out =  new ArrayList<>();
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                out.add(this.board[i][j]);
+            }
+        }
+        return out;
+    }
 }
