@@ -25,9 +25,10 @@ public class Main {
                 + "1 2 3\n"
                 + "4 5 6\n"
                 + "7 8 0\n"
-                + "\nNote: 0 is considered as empty place in the puzzle");
+                + "\nNote: 0 is considered as empty place in the puzzle\n");
         sc = new Scanner(System.in);
-
+        
+        
         ///////////////////////////////////////////  getting initial board
         System.out.print("Please Provide the initial Board=>");
         String initialBoard = sc.next().trim();
@@ -48,8 +49,10 @@ public class Main {
             b[2][0] = Integer.valueOf(board[6]);
             b[2][1] = Integer.valueOf(board[7]);
             b[2][2] = Integer.valueOf(board[8]);
+            CheckInput(b);
         } catch (NumberFormatException e) {
-            System.out.println("please provide integer!\n Improper input!\n run program again");
+            System.out.println("please provide integer between [0-8] inclusive!\n Improper input!\n run program again");
+            return;
         }
 
         iniBoard = new Board(b);
@@ -77,8 +80,10 @@ public class Main {
             b[2][0] = Integer.valueOf(board[6]);
             b[2][1] = Integer.valueOf(board[7]);
             b[2][2] = Integer.valueOf(board[8]);
+            CheckInput(b);
         } catch (NumberFormatException e) {
             System.out.println("please provide integer!\n Improper input!\n run program again");
+            return;
         }
         goalBoard = new Board(b);
         System.out.println("new board\n" + goalBoard);
@@ -224,6 +229,20 @@ public class Main {
         // print the path
         for(State s : path){
             System.out.println(s.board);
+        }
+    }
+    
+    public static void CheckInput(int[][] b){
+        ArrayList<Integer> check = new ArrayList<>();
+        for(int i=0;i<9;i++){
+            check.add(i);
+        }
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                if(!check.contains(b[i][j])){
+                    throw new NumberFormatException();
+                }
+            }
         }
     }
 
